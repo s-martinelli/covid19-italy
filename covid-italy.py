@@ -55,10 +55,11 @@ def button(update, context):
         "14": "Sardegna",
         "15": "Sicilia",
         "16": "Toscana",
-        "17": "Trentino Alto Adige",
-        "18": "Umbria",
-        "19": "Veneto",
-        "20": "Valle d'Aosta"
+        "17": "P.A. Bolzano",
+        "18": "P.A. Trento"
+        "19": "Umbria",
+        "20": "Valle d'Aosta",
+        "21": "Veneto"
     }
 
     r = requests.get(url = url_regioni)
@@ -80,26 +81,27 @@ def button(update, context):
 
 
 def stats_regioni(update, context):
-    keyboard = [[InlineKeyboardButton("Valle d'Aosta", callback_data='1'),
-        InlineKeyboardButton("Piemonte", callback_data='2')],
-        [InlineKeyboardButton("Liguria", callback_data='3')],
-        [InlineKeyboardButton("Lombardia", callback_data='4')],
-        [InlineKeyboardButton("Trentino Alto Adige", callback_data='5')],
-        [InlineKeyboardButton("Veneto", callback_data='6')],
-        [InlineKeyboardButton("Friuli Venezia Giulia", callback_data='7')],
-        [InlineKeyboardButton("Emilia Romagna", callback_data='8')],
-        [InlineKeyboardButton("Toscana", callback_data='9')],
-        [InlineKeyboardButton("Umbria", callback_data='10')],
-        [InlineKeyboardButton("Marche", callback_data='11')],
-        [InlineKeyboardButton("Lazio", callback_data='12')],
-        [InlineKeyboardButton("Abruzzo", callback_data='13')],
-        [InlineKeyboardButton("Molise", callback_data='14')],
-        [InlineKeyboardButton("Campania", callback_data='15')],
-        [InlineKeyboardButton("Puglia", callback_data='16')],
-        [InlineKeyboardButton("Basilicata", callback_data='17')],
-        [InlineKeyboardButton("Calabria", callback_data='18')],
-        [InlineKeyboardButton("Sicilia", callback_data='19')],
-        [InlineKeyboardButton("Sardegna", callback_data='20')]]
+    keyboard = [[InlineKeyboardButton("Abruzzo", callback_data='1'),
+        InlineKeyboardButton("Basilicata", callback_data='2')],
+        [InlineKeyboardButton("Calabria", callback_data='3')],
+        [InlineKeyboardButton("Campania", callback_data='4')],
+        [InlineKeyboardButton("Emilia Romagna", callback_data='5')],
+        [InlineKeyboardButton("Friuli Venezia Giulia", callback_data='6')],
+        [InlineKeyboardButton("Lazio", callback_data='7')],
+        [InlineKeyboardButton("Liguria", callback_data='8')],
+        [InlineKeyboardButton("Lombardia", callback_data='9')],
+        [InlineKeyboardButton("Marche", callback_data='10')],
+        [InlineKeyboardButton("Molise", callback_data='11')],
+        [InlineKeyboardButton("Piemonte", callback_data='12')],
+        [InlineKeyboardButton("Puglia", callback_data='13')],
+        [InlineKeyboardButton("Sardegna", callback_data='14')],
+        [InlineKeyboardButton("Sicilia", callback_data='15')],
+        [InlineKeyboardButton("Toscana", callback_data='16')],
+        [InlineKeyboardButton("P.A. Bolzano", callback_data='17')],
+        [InlineKeyboardButton("P.A. Trento", callback_data='18')],
+        [InlineKeyboardButton("Umbria", callback_data='19')],
+        [InlineKeyboardButton("Valle d'Aosta", callback_data='20')],
+        [InlineKeyboardButton("Veneto", callback_data='21')]]
     reply_markup = InlineKeyboardMarkup(keyboard)
     update.message.reply_text('Scegliere una regione:', reply_markup=reply_markup)
 
