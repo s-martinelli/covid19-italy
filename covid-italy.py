@@ -25,6 +25,7 @@ url_nazione = "https://corona.lmao.ninja/v2/countries/italy"
 url_regioni = "https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-regioni-latest.json"
 
 TOKEN = os.getenv("TOKEN")
+mode = os.getenv("MODE")
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     level=logging.INFO)
@@ -32,11 +33,6 @@ logger = logging.getLogger(__name__)
 
 def button(update, context):
     query = update.callback_query
-
-    # CallbackQueries need to be answered, even if no notification to the user is needed
-    # Some clients may have trouble otherwise. See https://core.telegram.org/bots/api#callbackquery
-    #query.answer()
-    #print(query)
 
     regioni = {
         "1": "Abruzzo",
@@ -55,11 +51,10 @@ def button(update, context):
         "14": "Sardegna",
         "15": "Sicilia",
         "16": "Toscana",
-        "17": "P.A. Bolzano",
-        "18": "P.A. Trento"
-        "19": "Umbria",
-        "20": "Valle d'Aosta",
-        "21": "Veneto"
+        "17": "Trentino Alto Adige",
+        "18": "Umbria",
+        "19": "Valle d'Aosta",
+        "20": "Veneto"
     }
 
     r = requests.get(url = url_regioni)
@@ -97,11 +92,10 @@ def stats_regioni(update, context):
         [InlineKeyboardButton("Sardegna", callback_data='14')],
         [InlineKeyboardButton("Sicilia", callback_data='15')],
         [InlineKeyboardButton("Toscana", callback_data='16')],
-        [InlineKeyboardButton("P.A. Bolzano", callback_data='17')],
-        [InlineKeyboardButton("P.A. Trento", callback_data='18')],
-        [InlineKeyboardButton("Umbria", callback_data='19')],
-        [InlineKeyboardButton("Valle d'Aosta", callback_data='20')],
-        [InlineKeyboardButton("Veneto", callback_data='21')]]
+        [InlineKeyboardButton("Trentino Alto Adige", callback_data='17')],
+        [InlineKeyboardButton("Umbria", callback_data='18')],
+        [InlineKeyboardButton("Valle d'Aosta", callback_data='19')],
+        [InlineKeyboardButton("Veneto", callback_data='20')]]
     reply_markup = InlineKeyboardMarkup(keyboard)
     update.message.reply_text('Scegliere una regione:', reply_markup=reply_markup)
 
@@ -144,9 +138,12 @@ if __name__ == '__main__':
 
     print ('Listening ...')
 
-    PORT = int(os.environ.get("PORT", "8443"))
-    HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME")
-    updater.start_webhook(listen="0.0.0.0",
-        port=PORT,
-        url_path=TOKEN)
-    updater.bot.set_webhook("https://{}.herokuapp.com/{}".format(HEROKU_APP_NAME, TOKEN))
+    if mode == "dev":
+        updater.start_polling()
+    elif mode == "prod":
+        PORT = int(os.environ.get("PORT", "8443"))
+        HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME")
+        updater.start_webhook(listen="0.0.0.0",
+            port=PORT,
+            url_path=TOKEN)
+        updater.bot.set_webhook("https://{}.herokuapp.com/{}".format(HEROKU_APP_NAME, TOKEN))
