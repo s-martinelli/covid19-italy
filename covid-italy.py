@@ -20,11 +20,11 @@ TEST = u"\U0001F9EA"
 TOMB = u"\u26B0"
 WARNING = u"\u26A0"
 WAVING_HAND = u"\U0001F44B"
-URL_NAZIONE = "https://corona.lmao.ninja/v2/countries/italy"
-URL_REGIONI = "https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-json/dpc-covid19-ita-regioni-latest.json"
 
 TOKEN = os.getenv("TOKEN")
 MODE = os.getenv("MODE")
+URL_NAZIONE = os.getenv("URL_NAZIONE")
+URL_REGIONI = os.getenv("URL_REGIONI")
 
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
