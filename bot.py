@@ -134,7 +134,6 @@ def stats_nazione(update, context):
 
 def start(update, context):
     user = update.message.from_user
-    print(user)
 
     update.message.reply_text(WAVING_HAND + " Ciao " + \
         user["first_name"] + \
@@ -150,25 +149,25 @@ def start(update, context):
         MAN_TECHOLOGIS + "Bot creato da: @stefanomart", \
         disable_web_page_preview=True)
 
+    def main():
+        logger.info("Starting bot")
+        updater = Updater(TOKEN, use_context=True)
+
+        # add handlers
+        updater.dispatcher.add_handler(CommandHandler('start', start))
+        updater.dispatcher.add_handler(CommandHandler('statsnazione', stats_nazione))
+        updater.dispatcher.add_handler(CommandHandler('statsregioni', stats_regioni))
+        updater.dispatcher.add_handler(CallbackQueryHandler(button))
+
+        if MODE == "dev":
+            updater.start_polling()
+        elif MODE == "prod":
+            PORT = int(os.environ.get("PORT", "8443"))
+            HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME")
+            updater.start_webhook(listen="0.0.0.0",
+                                port=PORT,
+                                url_path=TOKEN)
+            updater.bot.set_webhook("https://{}.herokuapp.com/{}".format(HEROKU_APP_NAME, TOKEN))
 
 if __name__ == '__main__':
-    logger.info("Starting bot")
-    updater = Updater(TOKEN, use_context=True)
-
-    # add handlers
-    updater.dispatcher.add_handler(CommandHandler('start', start))
-    updater.dispatcher.add_handler(CommandHandler('statsnazione', stats_nazione))
-    updater.dispatcher.add_handler(CommandHandler('statsregioni', stats_regioni))
-    updater.dispatcher.add_handler(CallbackQueryHandler(button))
-
-    print('Listening ...')
-
-    if MODE == "dev":
-        updater.start_polling()
-    elif MODE == "prod":
-        PORT = int(os.environ.get("PORT", "8443"))
-        HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME")
-        updater.start_webhook(listen="0.0.0.0",
-                              port=PORT,
-                              url_path=TOKEN)
-        updater.bot.set_webhook("https://{}.herokuapp.com/{}".format(HEROKU_APP_NAME, TOKEN))
+    main()
