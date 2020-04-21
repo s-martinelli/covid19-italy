@@ -20,7 +20,7 @@ pycparser==2.20
 pylint==2.4.4
 python-telegram-bot==12.6.1
 pythonping==1.0.9
-requests==2.7.0
+requests==2.20.0
 six==1.14.0
 telebot==0.0.3
 telegram==0.0.1
